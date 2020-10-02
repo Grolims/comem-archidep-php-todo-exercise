@@ -6,7 +6,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 // .display errors
 
-define('BASE_URL', '/');
+define('BASE_URL', '/comem-archidep-php-todo-exercise/');
 define('DB_USER', 'todolist');
 define('DB_PASS', 'todolist_password');
 define('DB_NAME', 'todolist');
@@ -76,7 +76,7 @@ if (isset($_POST['action'])) {
 /**
  * Select all tasks from the database.
  */
-$selectQuery = ''; // IMPLEMENT ME
+$selectQuery = "SELECT * FROM todo"; // Selecting all tasks - MR
 $items = $db->query($selectQuery);
 ?>
 
@@ -129,7 +129,6 @@ $items = $db->query($selectQuery);
 
 		<!-- Todo list -->
 		<div class='list-group mt-3'>
-
 			<!-- Todo items -->
 			<?php foreach ($items as $item) : ?>
 				<div class='list-group-item d-flex justify-content-between align-items-center<?php if ($item['done']) : ?> list-group-item-success<?php else : ?> list-group-item-warning<?php endif; ?>'>
