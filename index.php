@@ -6,13 +6,16 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 // .display errors
 
-define('BASE_URL', '/');
+define('BASE_URL', '/comem-archidep-php-todo-exercise/');
 define('DB_USER', 'todolist');
 define('DB_PASS', 'todolist_password');
 define('DB_NAME', 'todolist');
 define('DB_HOST', 'localhost');
 define('DB_PORT', '3306');
 
+
+
+//test co bd
 $db = new PDO('mysql:host=' . DB_HOST . ';port=' . DB_PORT . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
 $items = array();
 
@@ -43,7 +46,8 @@ if (isset($_POST['action'])) {
 
 			$id = $_POST['id'];
 			if (is_numeric($id)) {
-				$updateQuery = ''; // IMPLEMENT ME
+
+				$updateQuery = "UPDATE todo SET done = NOT done WHERE todo.id = $id;"; // Toggle task to 'done/undone' - MR
 				if (!$db->query($updateQuery)) {
 					die(print_r($db->errorInfo(), true));
 				}
@@ -59,7 +63,8 @@ if (isset($_POST['action'])) {
 
 			$id = $_POST['id'];
 			if (is_numeric($id)) {
-				$deleteQuery = ''; // IMPLEMENT ME
+
+				$deleteQuery = $deleteQuery = "DELETE FROM todo WHERE todo.id = $id;"; // delete task - MM
 				if (!$db->query($deleteQuery)) {
 					die(print_r($db->errorInfo(), true));
 				}
@@ -76,7 +81,7 @@ if (isset($_POST['action'])) {
 /**
  * Select all tasks from the database.
  */
-$selectQuery = ''; // IMPLEMENT ME
+$selectQuery = "SELECT * FROM todo ORDER BY created_at DESC " ; // Selecting all tasks  - MR / listed from newest to oldest -MM
 $items = $db->query($selectQuery);
 ?>
 
@@ -129,7 +134,6 @@ $items = $db->query($selectQuery);
 
 		<!-- Todo list -->
 		<div class='list-group mt-3'>
-
 			<!-- Todo items -->
 			<?php foreach ($items as $item) : ?>
 				<div class='list-group-item d-flex justify-content-between align-items-center<?php if ($item['done']) : ?> list-group-item-success<?php else : ?> list-group-item-warning<?php endif; ?>'>
